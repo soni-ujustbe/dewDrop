@@ -1,0 +1,99 @@
+$blue-clr: #003466;
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
+
+body {
+  font-family: "Lato", sans-serif;
+  padding-bottom:80px;
+  display: block;
+}
+
+.anim {
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+.shadow {
+  -webkit-box-shadow: 0px -2px 5px 0px rgba(0, 0, 0, 0.36);
+  -moz-box-shadow: 0px -2px 5px 0px rgba(0, 0, 0, 0.36);
+  box-shadow: 0px -2px 5px 0px rgba(168, 145, 145, 0.36);
+}
+
+.shadow2 {
+  -webkit-box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.container {
+    min-height: 100vh;
+    padding: 0 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    >  main{
+        width: 100%;
+    }
+}
+
+.FormMain{
+    position: relative;
+    display: flex;
+    width: 100%;
+    max-width:500px;
+    align-items: center;
+    align-content: center;
+    align-self: center;
+    margin:0 auto;
+   
+    input  {
+        width: 100%;
+        border: 0px;
+        padding: 15px;
+        padding-left: 40px;
+        z-index: 1;
+        background-color: transparent;
+        position: relative;
+        border-bottom: 1px solid #ccc;
+        outline: 0px;
+        
+    
+        
+        &.form-Username{
+            
+              background-image: url(/images/username_icon.png);
+              background-repeat: no-repeat;
+              background-position: left center;
+              background-size: 25px;
+        }
+        &.form-Password{
+            background-image: url(/images/password_icon.png);
+            background-repeat: no-repeat;
+            background-position: left center;
+            background-position: 0;
+            background-size: 25px;
+        
+        }
+       
+    }
+       
+    button {
+        background-color: #003466;
+        width: 100%;
+        line-height: 44px;
+        color: #fff;
+        border: 0;
+        border-radius: 22px;
+        max-height: 44px;
+        font-size: 20px;
+        letter-spacing: 1;
+       
+    
+     }
+    
+}

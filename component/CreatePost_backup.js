@@ -1,54 +1,59 @@
 // components/CreatePost.js
-import React, { useEffect, useState, Component } from 'react';
-import { collection, addDoc, setDoc, doc, docs, getDocs, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
+import React, { useEffect, useState ,Component } from 'react';
+import { collection, addDoc, setDoc, doc, docs, getDocs, getDoc,updateDoc,deleteDoc } from "firebase/firestore";
 //import app from '../config/fire-base';
 import firebaseApp from '../firebaseConfig'
 import { getFirestore } from "firebase/firestore";
 import { delBasePath } from 'next/dist/shared/lib/router/router';
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-
 
 const db = getFirestore();
 
 
-function CreatePost() {
-  const [newName, setNewName] = useState("");
-  const [newLike, setNewLike] = useState(0);
 
-  const [users, setUsers] = useState([]);
-  const usersCollectionRef = collection(db, "dewdropusers3");
-
+const CreatePost = () => {
+ 
   const [username, setUsername] = useState('');
   const [imageURL, setimage] = useState('');
   const [contype, setContype] = useState('false');
   const [description, setDescription] = useState('');
   const [videolink, setVideolink] = useState('');
-  const [audioURL, setaudio] = useState('')
+  const [blogs,setBlogs]=useState([])
+  const [audioURL,setaudio]=useState('')
+  const [src, setSrc] = useState('');
+  const [onFileSelectError, onFileSelectSuccess] = useState('');
   const [likecount, setCount] = useState(0);
   const [comments, setComments] = useState({ username: "", usercomments: "", dateTime: "" });
 
-
-  const createUser = async () => {
-
-    await addDoc(usersCollectionRef, { name: newName, newLike: {totalnumber:Number(newAge), } });
-  };
-  const createContent = async () => {
-    const data = {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    let data = {
       username: username,
-      imageUrl: imageURL,
+      image: imageURL,
       contype: contype,
       description: description,
       videolink: videolink,
       comments: comments,
       audio:audioURL,
-      like:newLike,
-    }
-    console.log(data);
-    await addDoc(usersCollectionRef, data);
-  };
+      like:Likecount,
 
-  // content type
+    };
+
+    addDoc(collection(db, "dewdropusers3"), {
+      username: username,
+      image: imageURL,
+      contype: contype,
+      description: description,
+      videolink: videolink,
+      comments: comments,
+      audio:audioURL,
+      like:Likecount,
+
+
+    });
+     }
+
+  // Content Type function
+
   const contentType = e => {
     const target = e.target;
     if (target.checked) {
@@ -56,7 +61,8 @@ function CreatePost() {
     }
   };
 
-  // base 64 converter (image converter)
+
+  // base 64 converter
   const getBase64 = file => {
     return new Promise(resolve => {
       let fileInfo;
@@ -74,11 +80,12 @@ function CreatePost() {
         baseURL = reader.result;
         console.log(baseURL);
         resolve(baseURL);
-
+        
       };
       console.log(fileInfo);
     });
   };
+
 
   const handleFileInputChange = (e) => {
     console.log(e.target.files[0]);
@@ -98,29 +105,67 @@ function CreatePost() {
   }
 
 
-  const updateUser = async (id, like) => {
-    const userDoc = doc(db, "dewdropusers3", id);
-    const newFields = { like: like + 1 };
-    await updateDoc(userDoc, newFields);
-  };
 
-  const deleteUser = async (id) => {
-    const userDoc = doc(db, "dewdropusers3", id);
-    await deleteDoc(userDoc);
-  };
+  const handleAudioInputChange = (e)=>{
+    console.log(e.target.files[0]);
+        const file = e.target.files[0];
 
+      getBase64(file)
+      .then(result => {
+        file["base64Audio"] = result;
+        console.log("File Is", file);
+        setaudio(result)
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
+    //     if (file.s > 1024)
+    //         onFileSelectError({ error: "File size cannot exceed more than 1MB" });
+    // else onFileSelectSuccess(file);
+
+
+    // this.setState({selectedFile: e.target.files [0]}, () => {
+    // console.log (this.state.selectedFile)} );
+
+  // pass file to props to make it available to parent component
+    // var data = e.target.files [0];
+    // this.props.AudioFileCallback(data);
+
+      // console.log (data)
+  }
+
+
+  async function allData() {
+    //const dataref = getDocs(collection(db, "dewdropusers3"));
+
+    const querySnapshot = await getDocs(collection(db, "users"));
+    //console.log(querySnapshot.data());
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+     console.log(doc.id, " => ", doc.data());
+      setBlogs([...blogs,doc.data()])
+  
+      //console.log('all users', blogs)
+      renderdata(doc);
+    });
+  }
+
+  function renderdata(doc){
+    setBlogs([...blogs,doc.data()])
+    console.log('all users', blogs);
+  }
   useEffect(() => {
-    const getUsers = async () => {
-      const data = await getDocs(usersCollectionRef);
-      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-      console.log(data);
-    };
+    allData();
+    console.log('all users', blogs);
+  }, [])
 
-    getUsers();
-  }, []);
+  
 
   return (
-    <>
+    <div>
+      <h2>Add Blog</h2>
+      <form className="SubmitForm" onSubmit={handleSubmit}>
         <div>
 
           <input
@@ -180,11 +225,13 @@ function CreatePost() {
           <input 
           type="file" 
           name="audioURL"
+          onChange={handleAudioInputChange}
           /> 
         </div>
       <div>
         <button 
-        onClick={createContent}>Save
+        // onClick={createUser}
+        type="submit">Save
         </button>
 
         </div>
@@ -200,52 +247,16 @@ function CreatePost() {
           
       
         </div>
-      <div className="App">
-        {/* <input
-          placeholder="Name..."
-          onChange={(event) => {
-            setNewName(event.target.value);
-          }}
-        />
-        <input
-          type="number"
-          placeholder="Age..."
-          onChange={(event) => {
-            setNewAge(event.target.value);
-          }}
-        /> */}
+      </form>
+      <>
+      
+        <img src={imageURL} />
+        <iframe width="560" height="315" src={videolink} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <img src={audioURL} />
+      </>
+    </div>
 
-        <button onClick={createUser}> Create User</button>
-        {users.map((user) => {
-          return (
-            <div>
-              {" "}
-              <h1>Name: {user.username}</h1>
-              <h1>Video link: {user.videolink}</h1>
-              <h3>like: {user.like}</h3>
-              <img src={user.imageUrl}/>
-              <button
-                onClick={() => {
-                  updateUser(user.id, user.like);
-                }}
-              >
-                {" "}
-                Increase Age
-              </button>
-              <button
-                onClick={() => {
-                  deleteUser(user.id);
-                }}
-              >
-                {" "}
-                Delete User
-              </button>
-            </div>
-          );
-        })}
-      </div>
-    </>
-  );
+
+  )
 }
-
 export default CreatePost;

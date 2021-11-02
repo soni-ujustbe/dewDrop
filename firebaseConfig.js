@@ -1,5 +1,8 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore , doc} from "firebase/firestore";
+// const google = require('googleapis'); 
+// import 'firebase/firestore';
+import 'firebase/storage';
 
 const firebaseApp = initializeApp({
     apiKey: "AIzaSyBlQgItodF5N_rYB2W587mhf3dXBOcupBw",
@@ -11,3 +14,9 @@ const firebaseApp = initializeApp({
 });
 
 const db = getFirestore();
+// export const auth = firebase.auth();
+// export const firestore = firebase.firestore();
+
+// export const increment = firebase.firestore.FieldValue.increment;
+
+

@@ -1,0 +1,313 @@
+.container {
+    min-height: 100vh;
+    padding: 0 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+  }
+  
+  .main {
+    padding: 5rem 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .header {
+    width: 100%;
+    height: 100px;
+    border-top: 1px solid #eaeaea;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .footer a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+  }
+  
+  .title a {
+    color: #0070f3;
+    text-decoration: none;
+  }
+  
+  .title a:hover,
+  .title a:focus,
+  .title a:active {
+    text-decoration: underline;
+  }
+  
+  .imagehead {
+    margin: 0;
+    line-height: 100;
+      text-align: center;
+  }
+  
+  .title,
+  .description {
+    text-align: center;
+  }
+  
+  .description {
+    line-height: 1.5;
+    font-size: 1.5rem;
+  }
+  
+  .code {
+    background: #fafafa;
+    border-radius: 5px;
+    padding: 0.75rem;
+    font-size: 1.1rem;
+    font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
+      Bitstream Vera Sans Mono, Courier New, monospace;
+  }
+  
+  .grid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 800px;
+    margin-top: 3rem;
+  }
+  
+  .card {
+    margin: 1rem;
+    padding: 1.5rem;
+    text-align: left;
+    color: inherit;
+    text-decoration: none;
+    border: 1px solid #eaeaea;
+    border-radius: 10px;
+    transition: color 0.15s ease, border-color 0.15s ease;
+    width: 45%;
+  }
+  
+  .card:hover,
+  .card:focus,
+  .card:active {
+    color: #0070f3;
+    border-color: #0070f3;
+  }
+  
+  .card h2 {
+    margin: 0 0 1rem 0;
+    font-size: 1.5rem;
+  }
+  
+  .card p {
+    margin: 0;
+    font-size: 1.25rem;
+    line-height: 1.5;
+  }
+  
+  .logo {
+    height: 0.5em;
+    margin-left: 45rem;
+    text-align: center;
+  }
+  
+  @media (max-width: 600px) {
+    .grid {
+      width: 100%;
+      flex-direction: column;
+    }
+  }
+  
+  
+  .LoginPage{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    .Logo{
+      width: 100%;
+      max-width: 100px;
+      img{
+        width: 100%;
+      }
+    }
+    .FormMain{margin-top: 15px; width: 100%;
+      > div{margin-bottom: 30px;}
+    }
+  
+  }
+  
+  //dashboard css
+  @import url(https://fonts.googleapis.com/css?family=Open+Sans:600,300);
+  
+  $brown: #786450;
+  
+  .frame {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    height: 400px;
+    margin-top: -200px;
+    margin-left: -200px;
+    border-radius: 2px;
+    box-shadow: 1px 2px 10px 0px rgba(0,0,0,0.3);
+      background: #003466;
+    background: -webkit-linear-gradient(bottom left, #EEBE6C 0%, #CA7C4E 100%);
+    background: -moz-linear-gradient(bottom left, #EEBE6C 0%, #CA7C4E 100%);
+    background: -o-linear-gradient(bottom left, #EEBE6C 0%, #CA7C4E 100%);
+    background: linear-gradient(to top right, #EEBE6C 0%, #CA7C4E 100%); 
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#EEBE6C', endColorstr='#CA7C4E',GradientType=1 ); 
+    color: $brown;
+      font-family: 'Open Sans', Helvetica, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+  }
+  
+  .center {
+    position: absolute;
+    top: 50px;
+    left: 40px;
+      height: 299px;
+      width: 320px;
+      background: #fff;
+      border-radius: 3px;
+      overflow: hidden;
+      box-shadow: 10px 10px 15px 0 rgba(0,0,0,0.3);
+  }
+  
+  .profile {
+      float: left;
+      width: 200px;
+      height: 320px;
+      text-align: center;
+      
+      .image {
+          position: relative;
+          width: 70px;
+          height: 70px;
+          margin: 38px auto 0 auto;
+          
+          .circle-1 {
+              position: absolute;
+              box-sizing: border-box;
+              width: 76px;
+              height: 76px;
+              top: -3px;
+              left: -3px;
+              border-width: 1px;
+              border-style: solid;
+              border-color: $brown $brown $brown transparent;
+              border-radius: 50%;
+              transition: all 1.5s ease-in-out;
+          }
+          
+          .circle-2 {
+              @extend .circle-1;
+              width: 82px;
+              height: 82px;
+              top: -6px;
+              left: -6px;
+              border-color: $brown transparent $brown $brown;
+          }
+          
+          img {
+              display: block;
+              border-radius: 50%;
+              background: #F5E8DF;
+          }
+          
+          &:hover {
+              cursor: pointer;
+              
+              .circle-1 {
+                  transform: rotate(360deg);
+              }
+              
+              .circle-2 {
+                  transform: rotate(-360deg);
+              }
+              
+          }
+          
+      }
+      
+      .name {
+          font-size: 15px;
+          font-weight: 600;
+          margin-top: 20px;
+      }
+      
+      .discription {
+          font-size: 11px;
+          line-height: 15px;
+      }
+      
+      .actions {
+          margin-top: 33px;
+          
+          .btn {
+              display: block;
+              width: 120px;
+              height: 30px;
+              margin: 0 auto 10px auto;
+              background: none;
+              border: 1px solid $brown;
+              border-radius: 15px;
+              font-size: 12px;
+              font-weight: 600;
+              box-sizing: border-box;
+              transition: all .3s ease-in-out;
+              color: $brown;
+              
+              &:hover {
+                  background: $brown;
+                  color: #fff;
+              }
+          }
+      }
+      
+  }
+  
+  .stats {
+      float: left;
+      
+      .box {
+          box-sizing: border-box;
+          width: 120px;
+          height: 99px;
+          background: #F5E8DF;
+          text-align: center;
+          padding-top: 28px;
+          transition: all .4s ease-in-out;
+          
+          &:hover {
+              background: #E1CFC2;
+              cursor: pointer;
+          }
+          
+          &:nth-child(2) {
+              margin: 1px 0;
+          }
+          
+      }
+      
+      span {
+          display: block;
+      }
+      
+      .value {
+          font-size: 18px;
+          font-weight: 600;
+      }
+      
+      .parameter {
+          font-size: 11px;
+      }
+      
+  }
+  
+  
