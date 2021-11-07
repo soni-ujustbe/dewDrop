@@ -1,28 +1,24 @@
 // components/CreatePost.js
-import React, { useEffect, useState ,Component } from 'react';
-import { collection, addDoc, setDoc, doc, docs, getDocs, getDoc,updateDoc,deleteDoc } from "firebase/firestore";
+import React, { useEffect, useState } from 'react';
+import { collection, addDoc, setDoc, doc, docs, getDocs, getDoc } from "firebase/firestore";
 //import app from '../config/fire-base';
 import firebaseApp from '../firebaseConfig'
 import { getFirestore } from "firebase/firestore";
-import { delBasePath } from 'next/dist/shared/lib/router/router';
-
 const db = getFirestore();
 
 
-
 const CreatePost = () => {
- 
   const [username, setUsername] = useState('');
   const [imageURL, setimage] = useState('');
   const [contype, setContype] = useState('false');
   const [description, setDescription] = useState('');
   const [videolink, setVideolink] = useState('');
+  const [logdescription, setLogdescription] = useState('');
   const [blogs,setBlogs]=useState([])
-  const [audioURL,setaudio]=useState('')
-  const [src, setSrc] = useState('');
-  const [onFileSelectError, onFileSelectSuccess] = useState('');
-  const [likecount, setCount] = useState(0);
-  const [comments, setComments] = useState('');
+  const [comments, setComments] = useState({ username: "", usercomments: "", dateTime: "" });
+  
+
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -32,11 +28,19 @@ const CreatePost = () => {
       contype: contype,
       description: description,
       videolink: videolink,
-      comments: comments,
-      audio:audioURL,
-      like:Likecount,
+      comments: comments
+
 
     };
+
+    // Add a new document in collection "cities" with ID 'LA'
+    // setDoc(doc(db, "dewdropusers3", ""), {
+    //   username: username,
+    //   image: imageURL,
+    //   contype: contype,
+    //   description: description,
+    //   videolink: videolink,
+    // });
 
     addDoc(collection(db, "dewdropusers3"), {
       username: username,
@@ -45,11 +49,20 @@ const CreatePost = () => {
       description: description,
       videolink: videolink,
       comments: comments,
-      audio:audioURL,
-      like:Likecount,
 
+    });
+    //console.log("Document written with ID: ", id);
 
-        });
+    // setDoc(doc(db, "dewdropusers3", "ujusbe2"), {
+    //   username: username,   
+    //   image: imageURL,
+    //   contype: contype,
+    //   description: description,
+    //   videolink: videolink,
+    //   comments:comments,
+
+    // });
+
   }
 
   // Content Type function
@@ -63,6 +76,7 @@ const CreatePost = () => {
 
 
   // base 64 converter
+
   const getBase64 = file => {
     return new Promise(resolve => {
       let fileInfo;
@@ -70,8 +84,10 @@ const CreatePost = () => {
       // Make new FileReader
       let reader = new FileReader();
 
+
       // Convert the file to base64 text
       reader.readAsDataURL(file);
+
 
       // on reader load somthing...
       reader.onload = () => {
@@ -80,12 +96,13 @@ const CreatePost = () => {
         baseURL = reader.result;
         console.log(baseURL);
         resolve(baseURL);
-        
+        ``
+
+
       };
       console.log(fileInfo);
     });
   };
-
 
   const handleFileInputChange = (e) => {
     console.log(e.target.files[0]);
@@ -104,50 +121,17 @@ const CreatePost = () => {
       });
   }
 
-
-
-  const handleAudioInputChange = (e)=>{
-    console.log(e.target.files[0]);
-        const file = e.target.files[0];
-
-      getBase64(file)
-      .then(result => {
-        file["base64Audio"] = result;
-        console.log("File Is", file);
-        setaudio(result)
-      })
-      .catch(err => {
-        console.log(err);
-      });
-
-    //     if (file.s > 1024)
-    //         onFileSelectError({ error: "File size cannot exceed more than 1MB" });
-    // else onFileSelectSuccess(file);
-
-
-    // this.setState({selectedFile: e.target.files [0]}, () => {
-    // console.log (this.state.selectedFile)} );
-
-  // pass file to props to make it available to parent component
-    // var data = e.target.files [0];
-    // this.props.AudioFileCallback(data);
-
-      // console.log (data)
-  }
-
-
   async function allData() {
     //const dataref = getDocs(collection(db, "dewdropusers3"));
 
-    const querySnapshot = await getDocs(collection(db, "users"));
+    const querySnapshot = await getDocs(collection(db, "dewdropusers3"));
     //console.log(querySnapshot.data());
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
-     console.log(doc.id, " => ", doc.data());
+     // console.log(doc.id, " => ", doc.data());
       setBlogs([...blogs,doc.data()])
-  
       //console.log('all users', blogs)
-      renderdata(doc);
+      renderdata(doc)
     });
   }
 
@@ -156,16 +140,14 @@ const CreatePost = () => {
     console.log('all users', blogs);
   }
   useEffect(() => {
-    allData();
+    allData()
     console.log('all users', blogs);
   }, [])
-
-  
 
   return (
     <div>
       <h2>Add Blog</h2>
-      <form className="SubmitForm" onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <div>
 
           <input
@@ -191,68 +173,40 @@ const CreatePost = () => {
         <div>
           <label>User Name</label>
           <input type="text" value={username}
-            onChange={( event ) => {
-              setUsername(event.target.value)}} />
+            onChange={({ target }) => setUsername(target.value)} />
         </div>
         <div>
           <label>Video Link</label>
           <input type="text" value={videolink}
-            onChange={( event ) => {
-              setVideolink(event.target.value)
-              }} />
+            onChange={({ target }) => setVideolink(target.value)} />
         </div>
         <div>
           <label>description</label>
           <textarea value={description}
-            onChange={( event ) => {setDescription(event.target.value)}} />
+            onChange={({ target }) => setDescription(target.value)} />
         </div>
-        
+        <div>
+          <label>Long Description</label>
+          <textarea value={logdescription}
+            onChange={({ target }) => setLogdescription(target.value)} />
+        </div>
         <div>
           <label>comments</label>
           <textarea value={comments}
-            onChange={( event ) => {setComments(event.target.value)}} />
+            onChange={({ target }) => setComments(target.value)} />
         </div>
-
-        
         <div>
-          <input type="file" 
-          name="imageURL" 
-          onChange={handleFileInputChange} />
+          <input type="file" name="file" onChange={handleFileInputChange} />
         </div>
 
-        <div>
-          <p>upload audio file</p>
-          <input 
-          type="file" 
-          name="audioURL"
-          onChange={handleAudioInputChange}
-          /> 
-        </div>
-      <div>
-        <button 
-        // onClick={createUser}
-        type="submit">Save
-        </button>
+        <button type="submit">Save</button>
 
-        </div>
 
-        <div>
-      
-          <button >💗 Heart</button>
-
-                
-        
-          {/* <button >💔 Unheart</button> */}
-     
-          
-      
-        </div>
       </form>
       <>
       
         <img src={imageURL} />
         <iframe width="560" height="315" src={videolink} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        <img src={audioURL} />
       </>
     </div>
 

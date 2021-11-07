@@ -16,7 +16,7 @@ import { getFirestore } from "firebase/firestore";
 
   const db=getFirestore();
 
-  const usersCollectionRef = collection(db, "users");
+  const usersCollectionRef = collection(db, "dewdropusers3 ");
   
 
 function getCreatPost() {
@@ -29,8 +29,8 @@ function getCreatPost() {
     const [audioURL,setaudio]=useState('')
     const [src, setSrc] = useState('');
     const [likecount, setCount] = useState(0);
-    const [comments, setComments] = useState({ username: "", usercomments: "", dateTime: "" });
-    // const usersCollectionRef = collection(db, "users");
+    const [comments, setComments] = useState('');
+    const usersCollectionRef = collection(db, "users");
     const [users, setUsers] = useState([]);
 
 
@@ -47,7 +47,12 @@ function getCreatPost() {
 
     
     
-
+      const querySnapshot = await getDocs(collection(db, "cities"));
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+      });
+      
       useEffect(() => {
           const getUsers=async()=>{
               let arr=[]
@@ -77,11 +82,7 @@ function getCreatPost() {
                         <h1>cpmment: {blog.comments}</h1>
                         
                         <h1>likecount: {blog.likecount}</h1>
-                        
-                       
-
-
-
+    
 
                         <button
                         onClick={() => {

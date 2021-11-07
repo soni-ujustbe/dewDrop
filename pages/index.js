@@ -3,10 +3,12 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image'
 import styles from '../styles/Home.module.scss'
 import CreatePost from '../component/CreatePost';
-import { useRouter } from "next/router";
+// import CreatePost_suraj from '../component/CreatePost_suraj';
+
+
 
 const Home = () => {
-  const router = useRouter();
+
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [notification, setNotification] = useState('');
@@ -19,7 +21,7 @@ const Home = () => {
       <Head>
         <title>Blog App</title>
       </Head>
-      <h1>Blog</h1>
+     
       <CreatePost />
       
     </div>

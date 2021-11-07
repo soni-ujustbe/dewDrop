@@ -24,7 +24,7 @@ const login = () => {
     try {
       const serializedState = JSON.stringify(user);
       localStorage.setItem('user', serializedState);
-      //router.push("/");
+      router.push("/");
       
     } catch {
       console.log("invalid credential")
@@ -63,7 +63,7 @@ const login = () => {
               //dispatch(getuserdataSuccess(response.data.userData));
               //localStorage.setItem('user', data);
               saveState(response.data.userData);
-              //redirecttopartner();
+              redirecttopartner();
 
             } else {
               // Send the error from API back
@@ -90,13 +90,13 @@ const login = () => {
 
     useEffect(() => {
       const name = localStorage.getItem('user');
-      if (name) {
-          console.log('Name exists');
-          setpageload(true)
-      } else {
-          console.log('Name is not found');
-          router.push("/");
-      }
+      // if (name) {
+      //     console.log('Name exists');
+      //     // setpageload(true)
+      // } else {
+      //     console.log('Name is not found');
+      //     router.push("/");
+      // }
 
   }, [])
 

@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore , doc} from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 // const google = require('googleapis'); 
 // import 'firebase/firestore';
 import 'firebase/storage';
